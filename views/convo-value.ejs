@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Career Coaching Conversation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <%- include("partials/header.ejs") %>
+    <main>
+        <h1>What do you value most?</h1>
+        <form id="careerValue" action="./convo-strength" method="POST">
+            <Label for="answerCareerValue">Select an option:</Label>
+            <Select id="dropdown" name="answerCareerValue" class="form-select">
+                <option selected value="Contribution">make a difference</option>
+                <option value="Competence">build expertise</option>
+                <option value="Confidence">build confidence</option>
+                <option value="Connection">cultivate relationships</option>
+                <option value="Challenge">stretch beyond what's known</option>
+                <option value="Contentment">experience satisfaction in work</option> 
+            </Select>            
+            <br/>
+            <button type="submit" class="btn btn-info">Next</button>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Career Development Plan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <%- include("partials/header.ejs") %>
+    <div >
+    <main class="devplan-container">
+        <div class="grid-container-head">
+            <div class="grid-item">
+                <h1><%= fName %>'s Career Development Plan</h1>
+            </div>
+            <div class="grid-item">
+                <br/>
+                <h3 class="careerValue">Career Priority: <strong><%= careerPriority %></strong></h3>
+                <p class="careerValue">You value <%= careerPriorityDescriptionCDP %>!</p>
+                <p class="careerDevPlanFooter">Find out more about the multidimensional career development framework <a href="https://www.juliewinklegiulioni.com/book/promotions/assessment/">here</a></p>
+                <p class="careerDevPlanFooter words-to-hide"> - Promotions are so yesterday: Redefine career development. Help employees thrive. By Julie Winkle Giulioni.</p><br/>    
+            </div>
+        </div>
+        <div class="grid-container-strength-header">
+            <h2>Your strength: <strong><%= strength %></strong></h2>
+        </div>
+        <div class="grid-container-strength">
+            <div class="grid-item">
+                
+                <h3>List of digital roles within <%= strength %>:</h3>
+                <ul>
+                    <% strengthRolesCDP.forEach(role => { %>
+                    <li class="careerDevPlan">
+                        <strong><%= role.title %>:</strong> <%= role.description %>
+                    </li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div class="grid-item">
+                <h3>List of skills within <%= strength %>:</h3>
+                <ul>
+                    <% strengthSkillsCDP.forEach(skill => { %>
+                        <li class="careerDevPlan">
+                           - <%= skill %> 
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+        <div class="grid-container-dev-header">
+            <h2>Your top priority for development: <strong><%= devAreaCDP %> - <%= devCompetencyCDP %></strong></h2>
+            <p class="careerDevPlanFooter words-to-hide">Find out more about the global skills and competency framework for the digital world <a href="https://sfia-online.org/en/sfia-8/all-skills-a-z">here</a>. By Skills Framework for the Information Age (SFIA) Foundation.</p>
+        </div>
+        <div class="grid-container-desc">
+                <p class="careerDevPlan">Descriptors of <%= devCompetencyCDP %> based on the <a href="https://sfia-online.org/en/sfia-8/responsibilities">levels of responsibility</a>:</p>
+                <p class="careerDevPlanFooter"> (You can use these descriptors for self-assessment and validation with an expert in <%= devCompetencyCDP %>) </p>
+                <ul>
+                    <% const competencyLevels = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7']; %>
+                    <% competencyLevels.forEach((level, index) => { %>
+                        <% if (competencyDesc1to7[index] !== '-') { %>
+                        <li class="careerDevPlanFooter"><strong><%= level %>:</strong> <%= competencyDesc1to7[index]%></li>
+                        <% } %>
+                    <% }) %>
+                </ul>
+        </div>
+        <div class="grid-container-learning">
+            <div class="grid-item">
+                <p class="careerDevPlan"><strong>70: Learning from experience</strong></p>
+                <p class="careerDevPlanFooter words-to-hide">70% of adult learning comes from tough on-the-job experiences</p>
+                <% if (learning70CDP !== undefined && learning70CDP !== null && learning70CDP.length >0) { %>
+                    <ul>
+                    <% learning70CDP.forEach(learning => { %>
+                    <li class="careerDevPlan">
+                       - <%= learning %>
+                    </li>
+                    <% }); %>
+                </ul>
+                <% } else { %>
+                    <p class="careerDevPlanFooter">[Here's a placeholder for you to add possible learning interventions after career conversations with your boss/coach/mentor]</p>
+                <% }; %>
+            </div>
+            <div class="grid-item">
+                <p class="careerDevPlan"><strong>20: Learning from people</strong></p>
+                <p class="careerDevPlanFooter words-to-hide">20% of adult learning comes from people (mostly the boss)</p>
+                <% if (learning20CDP !== undefined && learning20CDP !== null && learning20CDP.length >0) { %>
+                    <ul>
+                    <% learning20CDP.forEach(learning => { %>
+                    <li class="careerDevPlan">
+                       - <%= learning %>
+                    </li>
+                    <% }); %>
+                </ul>
+                <% } else { %>
+                    <p class="careerDevPlanFooter">[Here's a placeholder for you to add possible learning interventions after career conversations with your boss/coach/mentor]</p>
+                <% }; %>
+                </div>
+            <div class="grid-item">
+                <p class="careerDevPlan"><strong>10: Learning from formal training</strong></p>
+                <p class="careerDevPlanFooter words-to-hide">10% of adult learning comes from courses and reading</p>
+                <% if (learning10CDP !== undefined && learning10CDP !== null && learning10CDP.length >0) { %>
+                    <ul>
+                    <% learning10CDP.forEach(learning => { %>
+                    <li class="careerDevPlan">
+                        - <%= learning %>
+                    </li>
+                    <% }); %>
+                </ul>
+                <% } else { %>
+                    <p class="careerDevPlanFooter">[Here's a placeholder for you to add possible learning interventions after career conversations with your boss/coach/mentor]</p>
+                <% }; %>
+            </div>
+        </div>
+        <div class="grid-container-footer">
+            <p class="careerDevPlanFooter"><%= linkedIn %></p>
+            <p class="careerDevPlanFooter"><%= job %></p>
+        </div>
+    </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

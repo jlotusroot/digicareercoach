@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Career Coaching Conversation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <%- include("partials/header.ejs") %>
+    <main>
+        <h1>Great job!</h1>
+        <p>Careers are developed one conversation at a time... over time.</p>
+        <hr/>
+        <form action="./devplan" method="POST">
+            <label for="answerOfficerInfo">Please provide your information below before generating your career development plan:</label>
+        <div>
+            <div class="row">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="First name" aria-label="First name" name="firstName" oninput="checkFields()">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" name="lastName" oninput="checkFields()">
+                </div>
+            </div>
+            <br>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="LinkedIn Profile URL" name="LinkedIn Profile" oninput="checkFields()">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Job Title, Team, Department, Agency" name="Job Title" oninput="checkFields()">
+            </div>
+        </div>
+            <br/>
+            <p id="alertOnInput">Please ensure all fields above are completed.</p>
+            <button type="submit" class="btn btn-outline-info" id="submitButton" disabled>Generate Career Development Plan</button>
+        </form>  
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        function checkFields() {
+            //check if all fields are filled
+            const nameFirst = document.getElementsByName('firstName')[0].value;
+            const nameLast = document.getElementsByName('lastName')[0].value;
+            const linkedInURL = document.getElementsByName('LinkedIn Profile')[0].value;
+            const titleJob = document.getElementsByName('Job Title')[0].value;
+
+            //enable/disable the button based on the fields
+            const submitButtonForm = document.getElementById('submitButton');
+            submitButtonForm.disabled = !(nameFirst && nameLast && linkedInURL && titleJob);
+        }
+    </script>
+</body>
+</html>

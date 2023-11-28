@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Career Coaching Conversation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <%- include("partials/header.ejs") %>
+    <main>
+        <h1>What are you <span>most skilled in?</span></h1>
+        <form id="careerStrength" action="./convo-dev" method="POST">
+            <label for="answerCareerStrength">Select a role family:</label>
+            <Select id="dropdownStrength" name="answerCareerStrength" class="form-select">
+            <% data_Family.forEach(item => { %>
+                <option><%= item.title %></option>
+            <% }) %>
+            </Select>
+            <br/>
+            <button type="submit" class="btn btn-info">Next</button>
+        </form>
+           
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
