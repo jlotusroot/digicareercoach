@@ -15,49 +15,64 @@ const db = new pg.Pool({
     ssl: {
         rejectUnauthorized: false,
     }
-})
+});
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static("public"));
 
 db.connect(); //connect to the database
 
-let role_family = []; //this array to contain all the digital role families
+let list_role_family = []; //this array to contain all the digital role families
+const fetchRoleFamily = () => {
+    const roleFamilyQuery = "SELECT * FROM role_family ORDER BY title ASC";
 
-db.query("SELECT * FROM role_family ORDER BY title ASC", (err, res) => { //query all digital role families from 'role_family' Table
-    if (err) {
-        console.error("Error executing query", err.stack);
-    } else {
-        role_family = res.rows;
-    }
-});
+    db.query(roleFamilyQuery, (err, res) => {
+        if (err) {
+            console.error("Error executing query", err.stack);
+        } else {
+            list_role_family = res.rows;
+        }
+    });
+};
 
 let learningOptions70 = []; //this array to contain all the '70' learning options 
-db.query("SELECT id, title FROM learning WHERE category = '70 Learning from experience' ORDER BY title ASC", (err, res) => {
-    if (err) {
-        console.error("Error executing query", err.stack);
-    } else {
-        learningOptions70 = res.rows;
-    }
-});
+const fetchLearningOptions70 = () => {
+    const learningOptions70Query = "SELECT id, title FROM learning WHERE category = '70 Learning from experience' ORDER BY title ASC";
+
+    db.query(learningOptions70Query, (err, res) => {
+        if (err) {
+            console.error("Error executing query", err.stack);
+        } else {
+            learningOptions70 = res.rows;
+        }
+    });
+};
 
 let learningOptions20 = []; //this array to contain all the '20' learning options 
-db.query("SELECT id, title FROM learning WHERE category = '20 Learning through interactions with others' ORDER BY title ASC", (err, res) => {
-    if (err) {
-        console.error("Error executing query", err.stack);
-    } else {
-        learningOptions20 = res.rows;
-    }
-});
+const fetchLearningOptions20 = () => {
+    const learningOptions20Query = "SELECT id, title FROM learning WHERE category = '20 Learning through interactions with others' ORDER BY title ASC";
+
+    db.query(learningOptions20Query, (err, res) => {
+        if (err) {
+            console.error("Error executing query", err.stack);
+        } else {
+            learningOptions20 = res.rows;
+        }
+    });
+};
 
 let learningOptions10 = []; //this array to contain all the '10' learning options 
-db.query("SELECT id, title FROM learning WHERE category = '10 Learning through formal training' ORDER BY title ASC", (err, res) => {
-    if (err) {
-        console.error("Error executing query", err.stack);
-    } else {
-        learningOptions10 = res.rows;
-    }
-});
+const fetchLearningOptions10 = () => {
+    const learningOptions10Query = "SELECT id, title FROM learning WHERE category = '10 Learning through formal training' ORDER BY title ASC";
+
+    db.query(learningOptions10Query, (err, res) => {
+        if (err) {
+            console.error("Error executing query", err.stack);
+        } else {
+            learningOptions10 = res.rows;
+        }
+    });
+};
 
 const careerDimensionDescription = {
     'Contribution': ['making a difference'],
@@ -77,10 +92,12 @@ app.get("/convo-value", (req, res) => {
 });
 
 app.post("/convo-strength", async (req, res) => {
+    fetchRoleFamily();
+
     try {
         const selectedValue = req.body.answerCareerValue; //NOTE FOR INSERT INTO officer TABLE, career_value
         console.log(selectedValue);
-        console.log(role_family);
+        console.log(list_role_family);
     
         const sqlValue = `
             INSERT INTO officer (career_value)
@@ -102,10 +119,12 @@ app.post("/convo-strength", async (req, res) => {
 });
 
 app.get("/:newOfficerId/convo-strength", async (req, res) => {
-    res.render("convo-strength.ejs", { data_Family: role_family });
+    fetchRoleFamily();
+    res.render("convo-strength.ejs", { data_Family: list_role_family });
 })
 
 app.post("/:newOfficerId/convo-dev", async (req, res) => {
+    fetchRoleFamily();
     const newOfficerId = req.params['newOfficerId'];
 
     const selectedStrength = req.body.answerCareerStrength;
@@ -123,7 +142,8 @@ app.post("/:newOfficerId/convo-dev", async (req, res) => {
 });
 
 app.get("/:newOfficerId/convo-dev", async (req, res) => {
-    res.render("convo-dev.ejs", { data_Family: role_family });
+    fetchRoleFamily();
+    res.render("convo-dev.ejs", { data_Family: list_role_family });
 });
 
 
@@ -189,6 +209,9 @@ app.get("/:newOfficerId/convo-dev-competency", async (req, res) => {
 });
 
 app.post("/:newOfficerId/702010", async (req, res) => {
+    fetchLearningOptions70();
+    fetchLearningOptions20();
+    fetchLearningOptions10();
     const newOfficerId = req.params['newOfficerId'];
 
     const selectedDevCompetency = req.body.answerDevCompetency;
@@ -208,7 +231,9 @@ app.post("/:newOfficerId/702010", async (req, res) => {
 
 
 app.get("/:newOfficerId/702010", async (req, res) => {
-    
+    fetchLearningOptions70();
+    fetchLearningOptions20();
+    fetchLearningOptions10();
     const selectedDevCompetency = req.query.selectedDevCompetency || '';
 
     res.render("702010.ejs", {
@@ -275,12 +300,12 @@ app.post("/:newOfficerId/devplan", (req, res) => {
         //update DB
         const updateOfficerDetails = "UPDATE officer SET first_name = $1, last_name = $2, linkedin_profile = $3, job_title = $4 WHERE id = $5";
         db.query(updateOfficerDetails,[firstName, lastName, linkedIn, jobTitle, newOfficerId]); 
-        return res.redirect(`/${newOfficerId}/devplan`);
     } catch (error) {
         console.error("Error processing form:", error);
         res.status(500).send("Internal Server Error");
     }
 
+    return res.redirect(`/${newOfficerId}/devplan`);
 });
 
 app.get("/:newOfficerId/devplan", async (req, res) => {
