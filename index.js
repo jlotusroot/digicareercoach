@@ -4,7 +4,7 @@ import pg from "pg";
 import 'dotenv/config'
 
 const app = express();
-const port = 25060;
+const port = 8080;
 
 const db = new pg.Pool({
     user: process.env.USER,
