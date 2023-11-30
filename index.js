@@ -4,7 +4,7 @@ import pg from "pg";
 import 'dotenv/config'
 
 const app = express();
-const port = 8080;
+const port = 25060;
 
 const db = new pg.Pool({
     user: process.env.USER,
@@ -23,6 +23,7 @@ app.use(express.static("public"));
 db.connect(); //connect to the database
 
 let role_family = []; //this array to contain all the digital role families
+
 db.query("SELECT * FROM role_family ORDER BY title ASC", (err, res) => { //query all digital role families from 'role_family' Table
     if (err) {
         console.error("Error executing query", err.stack);
