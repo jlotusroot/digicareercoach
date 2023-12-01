@@ -6,6 +6,13 @@ import 'dotenv/config'
 const app = express();
 const port = 8080;
 
+// Log database credentials
+console.log("User: " + process.env.USER);
+console.log("Host: " + process.env.HOST);
+console.log("Database: " + process.env.DATABASE);
+console.log("Password: ***"); // Mask the actual password
+console.log("Port: " + process.env.PORT);
+
 const db = new pg.Pool({
     user: process.env.USER,
     host: process.env.HOST,
@@ -19,8 +26,6 @@ const db = new pg.Pool({
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static("public"));
-
-db.connect(); //connect to the database
 
 let list_role_family = []; //this array to contain all the digital role families
 const fetchRoleFamily = () => {
