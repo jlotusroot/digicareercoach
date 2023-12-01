@@ -11,7 +11,7 @@ console.log("User: " + process.env.USER);
 console.log("Host: " + process.env.HOST);
 console.log("Database: " + process.env.DATABASE);
 console.log("Password: ***"); // Mask the actual password
-console.log("Port: " + process.env.DB_PORT);
+console.log("DB Port: " + process.env.DB_PORT);
 
 const db = new pg.Pool({
     user: process.env.USER,
