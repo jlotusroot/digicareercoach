@@ -290,7 +290,7 @@ app.get("/:newOfficerId/form", (req, res) => {
     res.render("form.ejs");
 });
 
-app.post("/:newOfficerId/devplan", (req, res) => {
+app.post("/:newOfficerId/devplan", async (req, res) => {
     const newOfficerId = req.params['newOfficerId'];
 
     const firstName = req.body["firstName"];
@@ -304,7 +304,7 @@ app.post("/:newOfficerId/devplan", (req, res) => {
     try {
         //update DB
         const updateOfficerDetails = "UPDATE officer SET first_name = $1, last_name = $2, linkedin_profile = $3, job_title = $4 WHERE id = $5";
-        db.query(updateOfficerDetails,[firstName, lastName, linkedIn, jobTitle, newOfficerId]); 
+        await db.query(updateOfficerDetails,[firstName, lastName, linkedIn, jobTitle, newOfficerId]); 
     } catch (error) {
         console.error("Error processing form:", error);
         res.status(500).send("Internal Server Error");
