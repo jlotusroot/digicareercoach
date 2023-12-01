@@ -4,7 +4,7 @@ import pg from "pg";
 import 'dotenv/config'
 
 const app = express();
-const port = 8080;
+const appPort = 8080;
 
 // Log database credentials
 console.log("User: " + process.env.USER);
@@ -390,6 +390,6 @@ app.get("/:newOfficerId/devplan", async (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server running on port: ${port}`);
+app.listen(appPort, () => {
+    console.log(`Server running on port: ${appPort}`);
 });
